@@ -5,7 +5,7 @@ test_that("classif_adaboostm1", {
 
   parset.list = list(
     list(),
-    list(W =list(RWeka::J48, M = 30)),
+    list(W = list(RWeka::J48, M = 30)),
     list(W = list("DecisionStump"))
 
   )
