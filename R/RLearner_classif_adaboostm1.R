@@ -4,14 +4,18 @@ makeRLearner.classif.adaboostm1 = function() {
     cl = "classif.adaboostm1",
     package = c("RWeka", "rpart"),
     par.set = makeParamSet(
-      makeUntypedLearnerParam(id = "W", default = "DecisionStump"),
+      makeIntegerLearnerParam(id = "P", default = 100L,lower =90L),
+      makeLogicalLearnerParam(id = "Q", default = FALSE),
+      makeNumericLearnerParam(id = "S", default = 1L),
+      makeIntegerLearnerParam(id = "I", default = 10L, lower = 1L),
+      makeLogicalLearnerParam(id = "D", default = FALSE, requires = quote(!U)),
+      makeUntypedLearnerParam(id = "W", default = RWeka::DecisionStump),
       makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(xval = 0L),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "ada Boosting M1",
     short.name = "adaboostm1",
-    note = "",
+    note = "NAs are directly passed to WEKA with `na.action = na.pass`.",
     callees = c("AdaBoostM1", "Weka_control")
   )
 }
