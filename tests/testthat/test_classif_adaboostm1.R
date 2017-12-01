@@ -6,7 +6,10 @@ test_that("classif_adaboostm1", {
   parset.list = list(
     list(),
     list(W = list(RWeka::J48, M = 30)),
-    list(W = list("DecisionStump"))
+    list(W = list("DecisionStump")),
+    list(P = 100),
+    list(I = 10, S = 1),
+    list(I = 5, Q= FALSE)
 
   )
 
@@ -46,11 +49,18 @@ test_that("classif_adaboostm1", {
 
   }
 
-
   testSimpleParsets("classif.adaboostm1", multiclass.df, multiclass.target,
                     multiclass.train.inds, old.predicts.list, parset.list)
 
   testProbParsets("classif.adaboostm1", multiclass.df, multiclass.target,
                   multiclass.train.inds, old.probs.list, parset.list)
+
+  tt = function(formula, data, subset, ...) {
+    RWeka::AdaBoostM1(formula, data = data[subset, ], control = RWeka::Weka_control(...))
+  }
+
+  tp = function(model, newdata) predict(model, newdata, type = "class")
+
+  testCVParsets("classif.adaboostm1", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })
 
