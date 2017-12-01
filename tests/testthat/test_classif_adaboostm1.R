@@ -9,7 +9,7 @@ test_that("classif_adaboostm1", {
     list(W = list("DecisionStump")),
     list(P = 100),
     list(I = 10, S = 1),
-    list(I = 5, Q= FALSE)
+    list(I = 5, Q = FALSE)
 
   )
 
